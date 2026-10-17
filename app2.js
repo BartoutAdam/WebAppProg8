@@ -1,24 +1,56 @@
-const http = require('http')    //Pull in a useful node package
-                                
-const hostname = process.env.hostname || '127.0.0.1'    //get our ip address from the environment
-const port = process.env.port || 3001               //and the port
+const http = require('http')
 
-const server =
-  http.createServer(            //Creates the response loop
-    (req,res)=> {               //Anonymous function to handle the request
-      res.statusCode = 200      //code for OK
-      res.setHeader('Content-Type', 'text/html') //Set the mime type HTML
+const hostname = process.env.hostname || '127.0.0.1'
+const port = process.env.port || 3001
 
-      res.write('<html> <head> <title> Served </title> </head>')
-      res.write('<body>')
-      res.write('Content \n')
-      res.write('More content \n')
-      res.write('Hello World')    
-      res.end('</body></html>')
-      //Close the response
-    }                           
-)
+const server = http.createServer((req, res) => {
+  res.statusCode = 200
+  res.setHeader('Content-Type', 'text/html')
 
-server.listen(port, hostname, () => {   //Start the server
-  console.log(`Server running at http://${hostname}:${port}/`)  //Log the start
+  res.write('<!DOCTYPE html>')
+  res.write('<html><head><title>Cities to Visit</title></head>')
+  res.write('<body>')
+  res.write('<h1>Adam Bartout</h1>')
+  res.write("<h2>Cities I'd Like to Visit</h2>")
+
+  res.write(`
+    <table border="1">
+      <tr>
+        <th>City</th>
+        <th>Reason to Visit</th>
+        <th>Distance from Casablanca</th>
+        <th>Estimated Cost</th>
+      </tr>
+      <tr>
+        <td>Paris, France</td>
+        <td>I've always wanted to see the Eiffel Tower in person.</td>
+        <td>1,150 miles</td>
+        <td>$250</td>
+      </tr>
+      <tr>
+        <td>Berlin, Germany</td>
+        <td>I love the history and the whole vibe of the city.</td>
+        <td>1,430 miles</td>
+        <td>$350</td>
+      </tr>
+      <tr>
+        <td>Tokyo, Japan</td>
+        <td>It looks like an amazing mix of old traditions and modern technology.</td>
+        <td>6,800 miles</td>
+        <td>$900</td>
+      </tr>
+      <tr>
+        <td>Shanghai, China</td>
+        <td>I've heard the skyline is incredible and I want to see it myself.</td>
+        <td>6,500 miles</td>
+        <td>$850</td>
+      </tr>
+    </table>
+  `)
+
+  res.end('</body></html>')
+})
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`)
 })
